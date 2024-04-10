@@ -38,10 +38,27 @@ class Visualizer {
         for (let i = 0; i < 10; i++) {
             const from = this.getCoord(i, radius);
             const to = this.getCoord(i + 1, radius);
+        
+            // Calcula la dirección del segmento
+            const dx = from.x - to.x;
+            const dy = from.y - to.y;
+        
+            // Calcula el vector perpendicular (normal)
+            const nx = -dy;
+            const ny = dx;
+        
+            // Normaliza el vector para que tenga una longitud específica
+            // La longitud determinará qué tan lejos está el punto de control del centro,
+            // ajusta esto según sea necesario para hacer que la curva parezca un círculo
+            const length = Math.sqrt(nx * nx + ny * ny);
+            const controlLength = 20; // Ajusta este valor para controlar la curvatura
+            const controlX = (from.x + to.x) / 2 + (nx / length) * controlLength;
+            const controlY = (from.y + to.y) / 2 + (ny / length) * controlLength;
+        
             this.ctx.beginPath();
             this.ctx.strokeStyle = colors[i % colors.length];
             this.ctx.moveTo(from.x, from.y);
-            this.ctx.lineTo(to.x, to.y);
+            this.ctx.quadraticCurveTo(controlX, controlY, to.x, to.y);
             this.ctx.stroke();
 
             // Llamar a la función drawLabel para dibujar las etiquetas
