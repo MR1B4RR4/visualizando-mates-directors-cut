@@ -74,7 +74,7 @@ class Visualizer {
 
     drawLabel(i, radius) {
         const midTheta = 2 * Math.PI * 0.1 * i + 0.1 * Math.PI / 2;
-        const mid = this.getCoord(i + 0.5, radius + (this.options.showBars ? 10 : 15));
+        const mid = this.getCoord(i + 0.5, radius + (this.options.showBars ? 17 : 15));
         this.ctx.save();
         this.ctx.translate(mid.x, mid.y);
         this.ctx.fillStyle = "white";
