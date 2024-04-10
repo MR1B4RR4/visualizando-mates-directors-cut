@@ -77,7 +77,7 @@ class Visualizer {
         const mid = this.getCoord(i + 0.5, radius + (this.options.showBars ? 17 : 15));
         this.ctx.save();
         this.ctx.translate(mid.x, mid.y);
-        this.ctx.fillStyle = "white";
+        this.ctx.fillStyle = "white"; 
         this.ctx.font = "20px Times new roman";
         this.ctx.fillText(i.toString(), 0, 0);
         this.ctx.restore();
