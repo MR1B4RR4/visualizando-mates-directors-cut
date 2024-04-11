@@ -3,8 +3,8 @@ class Visualizer {
         this.canvas = document.getElementById(canvasId);
         this.ctx = this.canvas.getContext('2d');
         this.options = options;
+        this.setupOptions();
         this.digitsIndex = 0;
-        this.piDigits = this.options.piDigits;
         this.lastAnimationFrameTime = 0;
         this.animationSpeed = 150;
         this.sounds = {};
@@ -101,15 +101,37 @@ class Visualizer {
         }
     }
 
+    setupOptions() {
+        const selectElement = document.getElementById('configSelect');
+        selectElement.addEventListener('change', (event) => {
+            const selectedOption = event.target.value;
+            switch (selectedOption) {
+                case 'e':
+                    this.options.centerText = "e";
+                    this.options.piDigits = "2718281828459045235360287471352662497757247093699959574966967627";
+                    break;
+                case 'phi':
+                    this.options.centerText = "φ";
+                    this.options.piDigits = "1618033988749894848204586834365638117720309179805762862135448622";
+                    break;
+                default:
+                    this.options.centerText = "π";
+                    this.options.piDigits = "314159265358979323846264338327950288419716939937510";
+                    break;
+            }
+            this.resetAnimation(); // Restablecer la animación con las nuevas opciones
+        });
+    }
+
     resetAnimation() {
         if (this.animationFrameId !== null) {
-            cancelAnimationFrame(this.animationFrameId);  // Cancelar cualquier animación en curso
+            cancelAnimationFrame(this.animationFrameId);
         }
         this.digitsIndex = 0;
         this.lastAnimationFrameTime = 0;
         this.clearCanvas();
         this.drawBackground();
-        this.animationFrameId = requestAnimationFrame(this.animatePiDigits.bind(this));  // Iniciar la animación
+        this.animationFrameId = requestAnimationFrame(this.animatePiDigits.bind(this));
     }
 
     stopAnimation() {
@@ -136,7 +158,7 @@ class Visualizer {
 
     animatePiDigits(timestamp) {
         // Verificar si se han procesado todos los dígitos de Pi
-        if (this.digitsIndex >= this.piDigits.length - 1) {
+        if (this.digitsIndex >= this.options.piDigits.length - 1) {
             cancelAnimationFrame(this.animationFrameId);  // Cancelar la animación actual
             this.animationFrameId = null;  // Reiniciar el ID de frame
             return;  // Detener la animación
@@ -153,8 +175,8 @@ class Visualizer {
             const colors = this.options.colors;
     
             // Obtener los puntos basados en los dígitos de Pi
-            const fromDigit = parseInt(this.piDigits[this.digitsIndex]);
-            const toDigit = parseInt(this.piDigits[this.digitsIndex + 1]);
+            const fromDigit = parseInt(this.options.piDigits[this.digitsIndex]);
+            const toDigit = parseInt(this.options.piDigits[this.digitsIndex + 1]);
     
             const from = this.getCoord(fromDigit, radius);
             const to = this.getCoord(toDigit, radius);
@@ -190,5 +212,3 @@ const visualizer = new Visualizer('myCanvas', {
 
 visualizer.drawBackground();
 visualizer.setupAnimationControls(); // Configurar los controles de la animación
-
-// requestAnimationFrame(visualizer.animatePiDigits.bind(visualizer)); // Iniciar la animación
