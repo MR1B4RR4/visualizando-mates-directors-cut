@@ -112,10 +112,25 @@ class Visualizer {
         this.animationFrameId = requestAnimationFrame(this.animatePiDigits.bind(this));  // Iniciar la animación
     }
 
-    setupAnimationStart() {
-        const button = document.getElementById('playButton');
-        button.addEventListener('click', () => {
-            this.resetAnimation();  // Resetear y empezar la animación sin verificar running
+    stopAnimation() {
+        if (this.animationFrameId !== null) {
+            cancelAnimationFrame(this.animationFrameId);  // Cancelar la animación actual
+            this.animationFrameId = null;  // Limpiar el ID de frame
+        }
+        this.clearCanvas();  // Opcional: limpiar el canvas tras detener la animación
+        this.drawBackground();  // Opcional: redibujar el fondo estático
+    }
+
+    setupAnimationControls() {
+        const playButton = document.getElementById('playButton');
+        const stopButton = document.getElementById('stopButton');
+        
+        playButton.addEventListener('click', () => {
+            this.resetAnimation();  // Resetear y empezar la animación
+        });
+
+        stopButton.addEventListener('click', () => {
+            this.stopAnimation();  // Detener la animación
         });
     }
 
@@ -174,6 +189,6 @@ const visualizer = new Visualizer('myCanvas', {
 });
 
 visualizer.drawBackground();
-visualizer.setupAnimationStart(); // Configurar el inicio de la animación con el botón
+visualizer.setupAnimationControls(); // Configurar los controles de la animación
 
 // requestAnimationFrame(visualizer.animatePiDigits.bind(visualizer)); // Iniciar la animación
