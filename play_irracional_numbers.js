@@ -114,6 +114,10 @@ class Visualizer {
                     this.options.centerText = "φ";
                     this.options.piDigits = "1618033988749894848204586834365638117720309179805762862135448622";
                     break;
+                case 'tau':
+                    this.options.centerText = "τ";
+                    this.options.piDigits = "628318530717958647692528676655900576839433879875021";
+                    break;
                 case 'natural':
                     this.options.centerText = "ℕ";
                     this.options.piDigits = "01234567890";
