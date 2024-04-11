@@ -9,6 +9,7 @@ class Visualizer {
         this.animationSpeed = 150;
         this.sounds = {};
         this.loadSounds();
+        this.animationFrameId = null;
     }
 
     clearCanvas() {
@@ -100,34 +101,49 @@ class Visualizer {
         }
     }
 
+    resetAnimation() {
+        if (this.animationFrameId !== null) {
+            cancelAnimationFrame(this.animationFrameId);  // Cancelar cualquier animación en curso
+        }
+        this.digitsIndex = 0;
+        this.lastAnimationFrameTime = 0;
+        this.clearCanvas();
+        this.drawBackground();
+        this.animationFrameId = requestAnimationFrame(this.animatePiDigits.bind(this));  // Iniciar la animación
+    }
+
     setupAnimationStart() {
-        document.getElementById('playButton').addEventListener('click', () => {
-            this.animatePiDigits(0); // Empezar la animación con timestamp 0
+        const button = document.getElementById('playButton');
+        button.addEventListener('click', () => {
+            this.resetAnimation();  // Resetear y empezar la animación sin verificar running
         });
     }
 
     animatePiDigits(timestamp) {
+        // Verificar si se han procesado todos los dígitos de Pi
         if (this.digitsIndex >= this.piDigits.length - 1) {
-            return; // Detener la animación cuando se hayan dibujado todas las líneas
+            cancelAnimationFrame(this.animationFrameId);  // Cancelar la animación actual
+            this.animationFrameId = null;  // Reiniciar el ID de frame
+            return;  // Detener la animación
         }
-
+    
         // Comprobar si ha pasado suficiente tiempo desde la última animación
         if (timestamp - this.lastAnimationFrameTime > this.animationSpeed) {
-            this.lastAnimationFrameTime = timestamp; // Actualizar el tiempo de la última animación
+            this.lastAnimationFrameTime = timestamp;  // Actualizar el tiempo de la última animación
             
             let radius = this.options.radius;
             if (this.options.showDots) radius += 20;
             if (this.options.showBars) radius += 5;
-
+    
             const colors = this.options.colors;
-
+    
             // Obtener los puntos basados en los dígitos de Pi
             const fromDigit = parseInt(this.piDigits[this.digitsIndex]);
             const toDigit = parseInt(this.piDigits[this.digitsIndex + 1]);
-
+    
             const from = this.getCoord(fromDigit, radius);
             const to = this.getCoord(toDigit, radius);
-
+    
             // Dibujar la línea
             this.ctx.beginPath();
             this.ctx.strokeStyle = colors[(this.digitsIndex % colors.length)];
@@ -136,19 +152,13 @@ class Visualizer {
             this.ctx.stroke();
             
             // Reproduce el sonido
-            this.playSoundForDigit(toDigit); 
-
-            this.digitsIndex++; // Mover al siguiente par de dígitos
+            this.playSoundForDigit(toDigit);
+    
+            this.digitsIndex++;  // Mover al siguiente par de dígitos
         }
-
-        // Llamar a animatePiDigits de nuevo para intentar dibujar la siguiente línea
-        requestAnimationFrame(this.animatePiDigits.bind(this));
-    }
-
-    setupAnimationStart() {
-        document.getElementById('playButton').addEventListener('click', () => {
-            this.animatePiDigits(0); // Empezar la animación con timestamp 0
-        });
+    
+        // Solicitar el siguiente frame de la animación
+        this.animationFrameId = requestAnimationFrame(this.animatePiDigits.bind(this));
     }
     
 }
