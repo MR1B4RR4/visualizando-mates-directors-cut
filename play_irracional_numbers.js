@@ -145,6 +145,11 @@ class Visualizer {
         requestAnimationFrame(this.animatePiDigits.bind(this));
     }
 
+    setupAnimationStart() {
+        document.getElementById('playButton').addEventListener('click', () => {
+            this.animatePiDigits(0); // Empezar la animación con timestamp 0
+        });
+    }
     
 }
 
@@ -159,4 +164,6 @@ const visualizer = new Visualizer('myCanvas', {
 });
 
 visualizer.drawBackground();
-requestAnimationFrame(visualizer.animatePiDigits.bind(visualizer)); // Iniciar la animación
+visualizer.setupAnimationStart(); // Configurar el inicio de la animación con el botón
+
+// requestAnimationFrame(visualizer.animatePiDigits.bind(visualizer)); // Iniciar la animación
