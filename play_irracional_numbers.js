@@ -87,9 +87,15 @@ class Visualizer {
         const baseURL = 'https://github.com/MR1B4RR4/visualizando-mates-directors-cut/blob/main/';
     
         for (let i = 0; i <= 9; i++) {
-            const soundURL = `${baseURL}${i}.mp3`; // Construye la URL completa para cada archivo de sonido
+            //const soundURL = `${baseURL}${i}.mp3`; // Construye la URL completa para cada archivo de sonido
+            const soundURL = `${i}.ogg`
             const sound = new Audio(soundURL);
             this.sounds[i] = sound;
+            //let audio = document.createElement("audio");
+            //audio.src = "soundURL";
+            //audio.id = "soundURL";
+            //document.appendChild(audio);
+            //audio.play();
         }
     }
 
