@@ -124,7 +124,7 @@ class Visualizer {
                     break;
                 case 'fun':
                     this.options.centerText = "?";
-                    this.options.piDigits = "012345678951";
+                    this.options.piDigits = "0123456789517390";
                     break;
                 default:
                     this.options.centerText = "π";

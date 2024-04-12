@@ -1,10 +1,32 @@
 html,
 body {
+    font-family: Arial, sans-serif; /* Establece una fuente general para la página */
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    text-align: center;
+    margin: 20px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #666;
+    font-size: 16px;
 }
 
 canvas {
-    display: block;
+    border: 1px solid black; /* Añade un borde al canvas para que sea más visible */
+}
+
+footer {
+    margin-top: 20px;
 }
