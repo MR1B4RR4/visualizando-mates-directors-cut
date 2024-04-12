@@ -30,3 +30,32 @@ canvas {
 footer {
     margin-top: 20px;
 }
+
+#playButton {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Estilos para el botón de detener */
+#stopButton {
+    background-color: #f44336; /* Rojo */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Estilos comunes para todos los botones si es necesario */
+button {
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #555; /* Oscurece el botón cuando se pasa el mouse */
+}
