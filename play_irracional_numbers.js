@@ -123,8 +123,8 @@ class Visualizer {
                     this.options.piDigits = "01234567890";
                     break;
                 case 'fun':
-                    this.options.centerText = "?";
-                    this.options.piDigits = "0123456789517390";
+                    this.options.centerText = ":D";
+                    this.options.piDigits = "220235320";
                     break;
                 default:
                     this.options.centerText = "π";
